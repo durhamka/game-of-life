@@ -1,12 +1,15 @@
 class Cell
-  attr_accessor :x, :y, :board, :cell
+  attr_accessor :x, :y, :board
 
-  def initialize(board, x, y, cell)
+  def initialize(board, x, y)
     @board = board
     @x = x
     @y = y
-    @cell = cell
     find_neighbors
+  end
+
+  def state
+    board[x][y]
   end
 
   def next_state
@@ -30,11 +33,7 @@ class Cell
   end
 
   def alive?
-    if cell == 1
-      true
-    else
-     false
-    end
+    board[x][y] == 1
   end
 
   def last_row?
@@ -83,9 +82,5 @@ class Cell
 
   def alive_neighbor_count
     @neighbors.count(1)
-  end
-
-  def state
-    cell
   end
 end

@@ -8,7 +8,7 @@ class Board
     board.each_with_index do |row, x|
       @cells[x] = []
       row.each_with_index do |cell, y|
-        @cells[x] << Cell.new(board, x, y, cell)
+        @cells[x] << Cell.new(board, x, y)
       end
     end
   end
