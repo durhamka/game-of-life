@@ -15,9 +15,7 @@ class Cell
   def next_state
     if alive? && (alive_neighbor_count == 3 || alive_neighbor_count == 2)
       1
-    elsif alive? && alive_neighbor_count < 2
-      0
-    elsif alive? && alive_neighbor_count > 3
+    elsif alive? && (alive_neighbor_count < 2 || alive_neighbor_count > 3)
       0
     elsif !alive? && alive_neighbor_count == 3
       1
@@ -50,16 +48,24 @@ class Cell
 
   def find_neighbors
     @neighbors = []
-    unless first_row?
-      unless first_column?
-        @neighbors << board[x-1][y-1]
-      end
-      @neighbors << board[x-1][y]
-      unless last_column?
-        @neighbors << board[x-1][y+1]
-      end
-    end
+    collect_top_neighbors
+    collect_middle_neighbors
+    collect_bottom_neighbors
+  end
 
+  def collect_top_neighbors
+    return if first_row?
+
+    unless first_column?
+      @neighbors << board[x-1][y-1]
+    end
+    @neighbors << board[x-1][y]
+    unless last_column?
+      @neighbors << board[x-1][y+1]
+    end
+  end
+
+  def collect_middle_neighbors
     unless first_column?
       @neighbors << board[x][y-1]
     end
@@ -67,16 +73,17 @@ class Cell
     unless last_column?
       @neighbors << board[x][y+1]
     end
+  end
 
-    unless last_row?
-      unless first_column?
-        @neighbors << board[x+1][y-1]
-      end
-      @neighbors << board[x+1][y]
+  def collect_bottom_neighbors
+    return if last_row?
+    unless first_column?
+      @neighbors << board[x+1][y-1]
+    end
+    @neighbors << board[x+1][y]
 
-      unless last_column?
-        @neighbors << board[x+1][y+1]
-      end
+    unless last_column?
+      @neighbors << board[x+1][y+1]
     end
   end
 
