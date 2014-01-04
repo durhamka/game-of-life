@@ -1,0 +1,13 @@
+#!/usr/bin/ruby
+require './board_importer.rb'
+require './board.rb'
+require './cell.rb'
+
+board_importer = BoardImporter.new('initial_board.txt')
+board = board_importer.board
+new_board = board.next_board
+20.times do
+  puts new_board.to_s
+  new_board = new_board.next_board
+end
+
